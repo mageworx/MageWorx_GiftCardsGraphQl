@@ -31,4 +31,21 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\UrlRewriteGraphQl\Model\RoutableInterfaceTypeResolver">
+        <arguments>
+            <argument name="productTypeNameResolvers" xsi:type="array">
+                <item name="mageworx_gift_cards_product_type_resolver" xsi:type="object">MageWorx\GiftCardsGraphQl\Model\GiftCardProductTypeResolver</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\GraphQl\Schema\Type\Entity\DefaultMapper">
+        <arguments>
+            <argument name="map" xsi:type="array">
+                <item name="catalog_product" xsi:type="array">
+                    <item name="mageworx_giftcards" xsi:type="string">MageWorxGiftCards</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>

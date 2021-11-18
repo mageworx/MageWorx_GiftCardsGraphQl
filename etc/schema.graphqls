@@ -77,7 +77,7 @@ type MwGiftCardBalance {
     label: String @doc(description: "Balance Label")
 }
 
-type MageWorxGiftCards implements ProductInterface @doc(description: "MageWorxGiftCards defines features of a GiftCards product.") {
+type MageWorxGiftCards implements ProductInterface, RoutableInterface, CustomizableProductInterface @doc(description: "MageWorxGiftCards defines features of a GiftCards product.") {
     mageworx_gc_type: MageWorxGiftCardTypeEnum @doc(description: "Either EMAIL, PRINT, or OFFLINE") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\Type")
     mageworx_gc_additional_price: [MageWorxGiftCardAdditionalPrice] @doc(description: "Additional Prices") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\AdditionalPrices")
     mageworx_gc_customer_groups: [MageWorxGiftCardCustomerGroup] @doc(description: "Available for Customer Groups") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\CustomerGroups")

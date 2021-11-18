@@ -8,10 +8,10 @@
         "magento/framework" : ">=102.0.0 <104",
         "mageworx/module-giftcardsbase": ">= 2.8.2",
         "magento/module-quote-graph-ql": ">= 100.3.2 < 100.5",
-        "magento/module-url-rewrite-graph-ql": "< 100.4.2"
+        "magento/module-url-rewrite-graph-ql": ">= 100.4.2 < 100.5"
     },
     "type": "magento2-module",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
