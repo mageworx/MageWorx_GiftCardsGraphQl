@@ -1,0 +1,117 @@
+# Copyright © MageWorx, Inc. All rights reserved.
+# See COPYING.txt for license details.
+type Query {
+    mwGiftCardInfo (
+        code: String! @doc(description: "Gift Card code")
+    ): MwGiftCardInfo @doc(description: "The query returns information about a Gift Card") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\GiftCardInfo")
+}
+
+type Mutation {
+    addGiftCardProductsToCart(input: AddGiftCardProductsToCartInput): AddGiftCardProductsToCartOutput @resolver(class: "Magento\\QuoteGraphQl\\Model\\Resolver\\AddSimpleProductsToCart")
+    applyMwGiftCardToCart(input: ApplyMwGiftCardToCartInput): ApplyMwGiftCardToCartOutput @doc(description: "Add Gift Card to Cart") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\ApplyGiftCardToCart")
+    removeMwGiftCardFromCart(input: RemoveMwGiftCardToCartInput): RemoveMwGiftCardFromCartOutput @doc(description: "Remove Gift Card from Cart") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\RemoveGiftCardFromCart")
+}
+
+type MwGiftCardInfo {
+    status: String @doc(description: "Status")
+    balance: MwGiftCardBalance @doc(description: "Current Balance")
+    valid_till: String @doc(description: "Valid till")
+}
+
+input AddGiftCardProductsToCartInput {
+    cart_id: String!
+    cart_items: [GiftCardProductCartItemInput!]!
+}
+
+input GiftCardProductCartItemInput {
+    data: CartItemInput!
+    gift_card_product_options: GiftCardProductOptionsInput
+    customizable_options:[CustomizableOptionInput!]
+}
+
+input GiftCardProductOptionsInput {
+    card_amount: String! @doc(description: "Card Value")
+    card_amount_other: Float @doc(description: "Other Card Value")
+    mail_from: String @doc(description: "From Name")
+    mail_to: String @doc(description: "To Name")
+    mail_to_email: String @doc(description: "To E-mail")
+    mail_message: String @doc(description: "Message")
+    mail_delivery_date_user_value: String @doc(description: "Delivery Date")
+}
+
+input ApplyMwGiftCardToCartInput {
+    cart_id: String! @doc(description:"The unique ID that identifies the customer's cart")
+    gift_card_code: String! @doc(description: "Gift Card code")
+}
+
+input RemoveMwGiftCardToCartInput {
+    cart_id: String! @doc(description:"The unique ID that identifies the customer's cart")
+    gift_card_code: String! @doc(description: "Gift Card code")
+}
+
+type AddGiftCardProductsToCartOutput {
+    cart: Cart!
+}
+
+type ApplyMwGiftCardToCartOutput {
+    cart: Cart! @doc(description: "Describes the contents of the specified shopping cart")
+}
+
+type RemoveMwGiftCardFromCartOutput {
+    cart: Cart! @doc(description: "Describes the contents of the specified shopping cart")
+}
+
+type Cart {
+    applied_mw_gift_cards: [AppliedMwGiftCards] @doc(description:"An array of applied Gift Cards") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\AppliedGiftCards")
+}
+
+type AppliedMwGiftCards {
+    code: String @doc(description: "Gift Card code")
+    remaining: MwGiftCardBalance @doc(description: "Remaining balance")
+    applied: MwGiftCardBalance @doc(description: "Applied balance to the current cart")
+}
+
+type MwGiftCardBalance {
+    value: Float @doc(description: "Balance Value")
+    currency_code: String @doc(description: "A three-letter currency code, such as USD or EUR")
+    label: String @doc(description: "Balance Label")
+}
+
+type MageWorxGiftCards implements ProductInterface @doc(description: "MageWorxGiftCards defines features of a GiftCards product.") {
+    mageworx_gc_type: MageWorxGiftCardTypeEnum @doc(description: "Either EMAIL, PRINT, or OFFLINE") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\Type")
+    mageworx_gc_additional_price: [MageWorxGiftCardAdditionalPrice] @doc(description: "Additional Prices") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\AdditionalPrices")
+    mageworx_gc_customer_groups: [MageWorxGiftCardCustomerGroup] @doc(description: "Available for Customer Groups") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\CustomerGroups")
+    mageworx_gc_allow_open_amount: Boolean @doc(description: "Allow Open Amount")
+    mageworx_gc_open_amount_min: Float @doc(description: "Open Amount Min Value") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\OpenAmount")
+    mageworx_gc_open_amount_max: Float @doc(description: "Open Amount Max Value") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\OpenAmount")
+    amount_display_mode: Int @doc(description: "Amount Display Mode") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+    amount_placeholder: String @doc(description: "Custom Amount Placeholder") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+    from_name_placeholder: String @doc(description: "From Name Placeholder") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+    to_name_placeholder: String @doc(description: "To Name Placeholder") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+    to_email_placeholder: String @doc(description: "To Email Placeholder") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+    message_placeholder: String @doc(description: "Message Placeholder") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\Product\\ConfigAttributes")
+}
+
+type MageWorxGiftCardAdditionalPrice {
+    value: Float @doc(description: "Additional Price")
+    label: String @doc(description: "Additional Price Label")
+}
+
+type MageWorxGiftCardCustomerGroup {
+    id: Int @doc(description: "Customer Group ID")
+}
+
+type MageWorxGiftCardsCartItem implements CartItemInterface @doc(description: "MageWorxGiftCards Cart Item") {
+    mail_from: String @doc(description: "From Name") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\MageWorxGiftCardsCartItem\\MailFrom")
+    mail_to: String @doc(description: "To Name") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\MageWorxGiftCardsCartItem\\MailTo")
+    mail_to_email: String @doc(description: "To E-mail") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\MageWorxGiftCardsCartItem\\MailToEmail")
+    mail_message: String @doc(description: "Message") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\MageWorxGiftCardsCartItem\\MailMessage")
+    mail_delivery_date: String @doc(description: "Delivery Date") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\MageWorxGiftCardsCartItem\\MailDeliveryDate")
+    customizable_options: [SelectedCustomizableOption] @resolver(class: "Magento\\QuoteGraphQl\\Model\\Resolver\\CustomizableOptions")
+}
+
+enum MageWorxGiftCardTypeEnum @doc(description: "This enumeration defines the types of gift cards") {
+    EMAIL
+    PRINT
+    OFFLINE
+}
