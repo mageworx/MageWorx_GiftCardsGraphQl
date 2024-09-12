@@ -617,5 +617,5 @@ mw_giftcard/mail_to_email
 
 Base64 encoded uid
 ```
-Z2lmdGNhcmQvbWFpbF90b19lbWFpbA==
+bXdfZ2lmdGNhcmQvbWFpbF90b19lbWFpbA==
 ```
