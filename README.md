@@ -592,10 +592,10 @@ mutation {
 Syntax:
 
 ```
-mutation: {addProductsToCart(cartId: String! cartItems: [cartItemInput]!): AddProductsToCartOutput}
+mutation: {addProductsToCart(cartId: String! cartItems: [CartItemInput]!): AddProductsToCartOutput}
 ```
 
-The cartItemInput object must contain the following attributes:
+The CartItemInput object must contain the following attributes:
 
 ```
 entered_options: [{uid: ID!, value: String!}]
