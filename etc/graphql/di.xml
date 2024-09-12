@@ -20,6 +20,13 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="giftcard" xsi:type="object">MageWorx\GiftCardsGraphQl\Model\Cart\BuyRequest\GiftCardProductEnteredOptionsDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\GraphQl\Schema\Type\Enum\DefaultDataMapper">
         <arguments>
             <argument name="map" xsi:type="array">
