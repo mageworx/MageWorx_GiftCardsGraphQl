@@ -3,7 +3,15 @@
 type Query {
     mwGiftCardInfo (
         code: String! @doc(description: "Gift Card code")
-    ): MwGiftCardInfo @doc(description: "The query returns information about a Gift Card") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\GiftCardInfo")
+    ): MwGiftCardInfo @doc(description: "The query returns information about a Gift Card") @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\GiftCardInfo"),
+
+    customerGiftCards: [MwGiftCardInfo]
+    @doc(description: "Returns all gift cards belonging to the current customer")
+    @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\CustomerGiftCards")
+
+    customerGiftCardUsageHistory: [MwGiftCardUsageInfo]
+    @doc(description: "Returns a list of gift card usages for the current customer")
+    @resolver(class: "\\MageWorx\\GiftCardsGraphQl\\Model\\Resolver\\CustomerGiftCardUsageHistory")
 }
 
 type Mutation {
@@ -16,6 +24,14 @@ type MwGiftCardInfo {
     status: String @doc(description: "Status")
     balance: MwGiftCardBalance @doc(description: "Current Balance")
     valid_till: String @doc(description: "Valid till")
+}
+
+type MwGiftCardUsageInfo {
+    code: String @doc(description: "Gift Card code")
+    order_increment_id: String @doc(description: "Order increment ID")
+    order_id: Int @doc(description: "Order ID")
+    created_at: String @doc(description: "Date of usage")
+    amount: MwGiftCardBalance @doc(description: "Discounted amount")
 }
 
 input AddGiftCardProductsToCartInput {
