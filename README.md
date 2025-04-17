@@ -586,3 +586,36 @@ mutation {
     }
 }
 ```
+
+**7.** The **addProductsToCart** mutation allows you to add any product to the cart.
+
+Syntax:
+
+```
+mutation: {addProductsToCart(cartId: String! cartItems: [CartItemInput]!): AddProductsToCartOutput}
+```
+
+The CartItemInput object must contain the following attributes:
+
+```
+entered_options: [{uid: ID!, value: String!}]
+quantity: Float!
+sku: String!
+```
+
+**entered_options**
+
+You need to add gift card product cart item attributes array here, as uid and value.
+
+**uid**
+
+Base64 encoded cart item attribute starting with 'mw_giftcard/' prefix. For example:
+
+```
+mw_giftcard/mail_to_email
+```
+
+Base64 encoded uid
+```
+bXdfZ2lmdGNhcmQvbWFpbF90b19lbWFpbA==
+```
