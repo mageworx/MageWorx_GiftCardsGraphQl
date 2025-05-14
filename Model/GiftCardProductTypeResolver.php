@@ -12,7 +12,7 @@ use MageWorx\GiftCards\Model\Product\Type\GiftCards;
 
 class GiftCardProductTypeResolver implements TypeResolverInterface
 {
-    const GIFTCARDS_PRODUCT = 'MageWorxGiftCards';
+    public const GIFTCARDS_PRODUCT = 'MageWorxGiftCards';
 
     /**
      * @param array $data

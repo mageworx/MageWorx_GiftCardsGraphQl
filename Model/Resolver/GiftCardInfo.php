@@ -64,7 +64,7 @@ class GiftCardInfo implements ResolverInterface
      * @return Value|mixed
      * @throws LocalizedException
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    public function resolve(Field $field, $context, ResolveInfo $info, ?array $value = null, ?array $args = null)
     {
         if (empty($args['code'])) {
             throw new GraphQlInputException(__('Required parameter "code" is missing'));
