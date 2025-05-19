@@ -38,8 +38,8 @@ class CustomerGiftCards implements ResolverInterface
         $field,
         $context,
         ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         $userId = $context->getUserId();
         if (!$userId) {
